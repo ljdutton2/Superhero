@@ -4,5 +4,7 @@ class Dog:
         self.breed = breed
     def bark(self):
         print("Woof!!")
-my_dog = Dog("Rex", "Superdog")
-my_dog.bark()
+    def sit(self):
+        print("sits down")
+    def rollover(self):
+        print("rolls over")
