@@ -34,26 +34,34 @@ class Hero:
             total_damage += combine_damage
         return total_damage
 
-
     def add_ability(self, ability):
         self.abilities.append(ability)
 
 
     def add_armor(self, armor):
-  '''Add armor to self.armors
-    Armor: Armor Object
+        self.armors.append(armors)
+
+    def defend(self, damage_amt = 0):
+        total_block = 0
+        for armor in self.armors:
+            add_block += Armor.block(armor)
+            total_block += add_block
+
+        return abs(damage_amt - total_block)
+
+    def take_damage(self,damage):
+        damage = self.defend(damage)
+        self.current_health -= damage
+
+    #def is_alive(self):
+
+    #def fight(self,opponent)
 
 
 
-
-
-
-
-
-if __name__ == "__main__":
+if __name__ == '__main__':
       ability = Ability("Great Debugging", 50)
       another_ability = Ability("Smarty Pants", 90)
-      hero = Hero("Grace Hopper", 200)
-      hero.add_ability(ability)
-      hero.add_ability(another_ability)
-      print (hero.attack())
+      my_hero = Hero("Grace Hopper", 200)
+      my_hero.take_damage(50)
+      print (Hero.defend)
