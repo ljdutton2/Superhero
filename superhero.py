@@ -17,6 +17,7 @@ class Armor:
 
     def block(self):
         value = random.randint(0, self.max_block)
+        return value
 
 class Hero:
     def __init__(self, name, starting_health=100):
@@ -39,29 +40,51 @@ class Hero:
 
 
     def add_armor(self, armor):
-        self.armors.append(armors)
+        self.armors.append(armor)
 
     def defend(self, damage_amt = 0):
         total_block = 0
         for armor in self.armors:
-            add_block += Armor.block(armor)
-            total_block += add_block
+            total_block += Armor.block(armor)
 
         return abs(damage_amt - total_block)
 
+#this is running properly but I have no idea how to make sure it subtracts 40
     def take_damage(self,damage):
         damage = self.defend(damage)
         self.current_health -= damage
 
-    #def is_alive(self):
+    def is_alive(self):
+        if self.current_health < 1:
+            return False
+        else:
+            return True
 
-    #def fight(self,opponent)
+    def fight(self,opponent):
+        opponent = Hero("Booty Thunderclap")
+        while self.is_alive() and opponent.is_alive():
+            opponent.take_damage(self.attack())
+            self.take_damage(opponent.attack())
+
+        if self.is_alive() == False and opponent.is_alive() == False:
+            print("Both players are deceased :( ")
+        elif self.is_alive():
+            print(self.name + " won!")
+        else:
+            print(opponent.name + " won!")
+
 
 
 
 if __name__ == '__main__':
-      ability = Ability("Great Debugging", 50)
-      another_ability = Ability("Smarty Pants", 90)
-      my_hero = Hero("Grace Hopper", 200)
-      my_hero.take_damage(50)
-      print (Hero.defend)
+   hero1 = Hero("Wonder Woman")
+   hero2 = Hero("Dumbledore")
+   ability1 = Ability("Super Speed", 300)
+   ability2 = Ability("Super Eyes", 130)
+   ability3 = Ability("Wizard Wand", 80)
+   ability4 = Ability("Wizard Beard", 20)
+   hero1.add_ability(ability1)
+   hero1.add_ability(ability2)
+   hero2.add_ability(ability3)
+   hero2.add_ability(ability4)
+   hero1.fight(hero2)
