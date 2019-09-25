@@ -61,7 +61,7 @@ class Hero:
             return True
 
     def fight(self,opponent):
-        opponent = Hero("Booty Thunderclap")
+        opponent = Hero("Villian")
         while self.is_alive() and opponent.is_alive():
             opponent.take_damage(self.attack())
             self.take_damage(opponent.attack())
