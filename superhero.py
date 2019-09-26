@@ -1,4 +1,6 @@
 import random
+#Lauren todo fix pytest
+#super function 
 
 class Ability:
     def __init__(self, name, max_damage):
@@ -26,6 +28,17 @@ class Hero:
             self.abilities = []
             self.armors =  []
             self.current_health = 100
+#I dont understand how/why we can make self variables if its not a paramater in init
+            self.deaths = 0
+            self.kills = 0
+
+    def add_kills(self,num_kills):
+        self.kills += num_kills
+
+    def add_deaths(self, num_deaths):
+        self.kills += num_deaths
+
+
 
     def attack(self):
         total_damage = 0
@@ -69,22 +82,46 @@ class Hero:
         if self.is_alive() == False and opponent.is_alive() == False:
             print("Both players are deceased :( ")
         elif self.is_alive():
+            # is this redundant
+            self.add_kills(1)
+            opponent.add_deaths(1)
             print(self.name + " won!")
         else:
+            self.add_deaths(1)
+            opponent.add_kills(1)
             print(opponent.name + " won!")
+
+class Weapon(Ability):
+    def __init__(self, name, max_damage):
+        self.name = name
+        self.max_damage = max_damage
+        #super() function
+    def attack(self):
+        weapon_attack = self.max_damage // 2
+        return (random.randint(weapon_attack, self.max_damage))
+
+
+class Team:
+    def __init__(self,name,):
+        self.name = name
+
+    def add_hero(self,hero):
+        hero_list = self.hero = []
+        hero_list.append(hero)
+
+    def remove_hero(self,hero):
+        return hero_list.remove(hero)
+
+    def viewallheroes(self):
+        for hero in self.hero:
+            print(hero.name)
+
+
 
 
 
 
 if __name__ == '__main__':
-   hero1 = Hero("Wonder Woman")
-   hero2 = Hero("Dumbledore")
-   ability1 = Ability("Super Speed", 300)
-   ability2 = Ability("Super Eyes", 130)
-   ability3 = Ability("Wizard Wand", 80)
-   ability4 = Ability("Wizard Beard", 20)
-   hero1.add_ability(ability1)
-   hero1.add_ability(ability2)
-   hero2.add_ability(ability3)
-   hero2.add_ability(ability4)
-   hero1.fight(hero2)
+    knife = Weapon("knife", 30)
+    print(knife.name)
+    print(knife.attack())
