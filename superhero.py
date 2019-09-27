@@ -126,28 +126,37 @@ class Team:
 
     def stats(self):
         for hero in self.heroes:
-            print(hero.name + ': \n Kills:' + hero.kills + " Deaths: " + hero.deaths)
+            print(hero.name)
+            print(f"Kills: {hero.kills}  Deaths: {hero.deaths}.")
 
     def attack(self, other_team):
         hero_attackers = []
         opponent_attackers = []
+
         for hero in self.heroes:
-            while len(hero_attackers) > 0:
-                if living_hero.isalive() == True:
-                    hero_attackers.append(living_hero)
-                    hero_fighter = random.choice(hero_attackers)
+            if hero.is_alive() == True:
+                hero_attackers.append(hero)
 
-        for hero in opponent.heroes:
-            while len(opponent_attackers) > 0:
-                if opponent.isalive() == True:
-                    opponent_attackers.append(opponent)
-                    opponent_fighter = random.choice(opponent_attackers)
+        for hero in other_team.heroes:
+            if hero.is_alive() == True:
+                opponent_attackers.append(hero)
 
-        hero_fighter.fight(opponent.fighter)
+        while len(hero_attackers) > 1 and len(opponent_attackers):
+            hero_fighter = random.choice(hero_attackers)
+            opponent_fighter = random.choice(opponent_attackers)
+            hero_fighter.fight(opponent_fighter)
+            if not hero_fighter.is_alive(): hero_attackers.pop(hero_fighter)
+            if not opponent_fighter.is_alive(): opponent_attackers.pop(opponent_fighter)
+
+
 
 
 class Arena:
+
     def __init__(self):
+        self.con()
+
+    def con(self):
         self.team_one = self.build_team_one()
         self.team_two = self.build_team_two()
 
@@ -157,11 +166,13 @@ class Arena:
         user_ability = Ability(ability_1, ability_max)
         return user_ability
 
+
     def create_weapon(self):
         weapon_1 = input("Choose a weapon for your hero")
         weapon_max = input(f"What is the max damage of {weapon_1}: ")
         user_weapon = Weapon(weapon_1, weapon_max)
         return user_weapon
+
 
     def create_armor(self):
         armor_1 = input("Choose an armor to protect your hero")
@@ -169,19 +180,24 @@ class Arena:
         user_armor = Armor(armor_1, armor_max)
         return user_armor
 
+
     def create_hero(self):
         hero_name = input("Choose a name for your hero!")
-        hero = Hero(hero_name)
-        hero.abilities = hero.append(create_ability())
-        hero.armors = hero.append(create_armor())
-        hero.abilities = hero.append(create_weapon())
-        return hero
+        new_hero = Hero(hero_name)
+        abilities = self.create_ability()
+        armors = self.create_armor()
+        weapons = self.create_weapon()
+        new_hero.add_ability(abilities)
+        new_hero.add_armor(armors)
+        new_hero.add_weapon(weapons)
+        return new_hero
+
 
     def build_team_one(self):
         team_1_name = input("Choose a name for Team 1")
         first_team = Team(team_1_name)
         team_1_heroes = int(input(f"How many heroes are on {team_1_name}? "))
-        for _ in team_1_heroes:
+        for _ in range(team_1_heroes):
             hero = self.create_hero()
             first_team.add_hero(hero)
         return first_team
@@ -190,7 +206,7 @@ class Arena:
         team_2_name = input("Choose a name for Team 2")
         second_team = Team(team_2_name)
         team_2_heroes = int(input(f"How many heroes are on {team_2_name}? "))
-        for _ in team_2_heroes:
+        for _ in range(team_2_heroes):
             hero = self.create_hero()
             second_team.add_hero(hero)
         return second_team
@@ -198,7 +214,8 @@ class Arena:
 
     def team_battle(self):
         print("Let the battle begin!")
-        Hero.fight(self.team_one, self.team_two)
+        #error
+        self.team_one.attack(self.team_two)
 
     def show_stats(self):
         # need to add winning team
