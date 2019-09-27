@@ -1,6 +1,7 @@
 import random
-#Lauren todo fix pytest
-#super function
+# Lauren todo fix pytest
+# super function
+
 
 class Ability:
     def __init__(self, name, max_damage):
@@ -21,20 +22,22 @@ class Armor:
         value = random.randint(0, self.max_block)
         return value
 
+
 class Hero:
     def __init__(self, name, starting_health=100):
             self.name = name
-            self.starting_health= starting_health
+            self.starting_health = starting_health
             self.abilities = []
-            self.armors =  []
+            self.armors = []
             self.current_health = 100
-#I dont understand how/why we can make self variables if its not a paramater in init
+# I dont understand how/why we can make self variables if its not a paramater in init
             self.deaths = 0
             self.kills = 0
+
     def add_weapon(self, weapon):
         self.abilities.append(weapon)
 
-    def add_kills(self,num_kills):
+    def add_kills(self, num_kills):
         self.kills += num_kills
 
     def add_deaths(self, num_deaths):
@@ -44,7 +47,7 @@ class Hero:
         total_damage = 0
         combine_damage = 0
         for ability in self.abilities:
-            combine_damage=Ability.attack(ability)
+            combine_damage = Ability.attack(ability)
             total_damage += combine_damage
         return total_damage
 
@@ -54,15 +57,15 @@ class Hero:
     def add_armor(self, armor):
         self.armors.append(armor)
 
-    def defend(self, damage_amt = 0):
+    def defend(self, damage_amt=0):
         total_block = 0
         for armor in self.armors:
             total_block += Armor.block(armor)
 
         return abs(damage_amt - total_block)
 
-#this is running properly but I have no idea how to make sure it subtracts 40
-    def take_damage(self,damage):
+# this is running properly but I have no idea how to make sure it subtracts 40
+    def take_damage(self, damage):
         damage = self.defend(damage)
         self.current_health -= damage
 
@@ -72,7 +75,7 @@ class Hero:
         else:
             return True
 
-    def fight(self,opponent):
+    def fight(self, opponent):
         opponent = Hero("Villian")
         while self.is_alive() and opponent.is_alive():
             opponent.take_damage(self.attack())
@@ -90,25 +93,27 @@ class Hero:
             opponent.add_kills(1)
             print(opponent.name + " won!")
 
+
 class Weapon(Ability):
     def __init__(self, name, max_damage):
         self.name = name
         self.max_damage = max_damage
-        #super() function
-    def attack(self,other_team):
+        # super() function
+
+    def attack(self, other_team):
         weapon_attack = self.max_damage // 2
         return (random.randint(weapon_attack, self.max_damage))
 
 
 class Team:
-    def __init__(self,name):
+    def __init__(self, name):
         self.name = name
         self.heroes = []
 
-    def add_hero(self,hero):
+    def add_hero(self, hero):
         self.heroes.append(hero)
 
-    def remove_hero(self,hero):
+    def remove_hero(self, hero):
         return self.heroes.remove(hero)
 
     def viewallheroes(self):
@@ -129,21 +134,21 @@ class Team:
 		for hero in self.heroes:
 			while len(hero_attackers) > 0:
 				if living_hero.isalive() == True:
-				hero_attackers.append(living_hero)
-				hero_fighter = random.choice(hero_attackers)
+					hero_attackers.append(living_hero)
+					hero_fighter = random.choice(hero_attackers)
 		for hero in opponent.heroes:
 			while len(opponent_attackers) > 0:
 				if opponent.isalive() == True:
-				opponent_attackers.append(opponent)
-				opponent_fighter = random.choice(opponent_attackers)
+					opponent_attackers.append(opponent)
+opponent_fighter = random.choice(opponent_attackers)
 
-		hero_fighter.fight(opponent.fighter)
+hero_fighter.fight(opponent.fighter)
+
 
 class Arena:
     def __init__(self):
 		self.team_one = []
 		self.team_two = []
-
 
     def create_ability(self):
         ability_1 = input("Choose an ability for your hero")
@@ -171,7 +176,6 @@ class Arena:
         hero.abilities = hero.append(create_weapon())
         return hero
 
-
     def build_team_one(self):
        team_1_name = input("Choose a name for Team 1")
        first_team = Team(team_1_name)
@@ -196,8 +200,14 @@ class Arena:
 		Hero.fight(self.team_one)(self.team_two)))
 
 	def show_stats(self):
-		team_1_results = 0
-		team_2_results = 0
+		# need to add winning team
+		# add k/d
+		# show surviving heroes
+		print("The results are: ")
+		team_1_result = self.team_one.stats()
+		team_2_results = self.team_two.stats()
+		print(team_1_result)
+		print(team_2_results)
 
 
 
@@ -209,6 +219,8 @@ class Arena:
 
 
 if __name__ == '__main__':
-    knife = Weapon("knife", 30)
-    print(knife.name)
-    # print(knife.attack())
+ arena = Arena()
+    arena.build_team_one()
+    arena.build_team_two()
+    arena.team_battle()
+    arena.show_stats()
