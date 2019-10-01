@@ -157,28 +157,28 @@ class Arena:
         self.second_team = []
 
     def create_ability(self):
-        ability_1 = input("Choose an ability for your hero")
+        ability_1 = input("Choose an ability for your hero ")
         ability_max = input(f"What is the max damage of {ability_1}: ")
         user_ability = Ability(ability_1, ability_max)
         return user_ability
 
 
     def create_weapon(self):
-        weapon_1 = input("Choose a weapon for your hero")
+        weapon_1 = input("Choose a weapon for your hero: ")
         weapon_max = input(f"What is the max damage of {weapon_1}: ")
         user_weapon = Weapon(weapon_1, weapon_max)
         return user_weapon
 
 
     def create_armor(self):
-        armor_1 = input("Choose an armor to protect your hero")
+        armor_1 = input("Choose an armor to protect your hero: ")
         armor_max = input(f"What is the max protection of the {armor_1}: ")
         user_armor = Armor(armor_1, armor_max)
         return user_armor
 
 
     def create_hero(self):
-        hero_name = input("Choose a name for your hero!")
+        hero_name = input("Choose a name for your hero: ")
         new_hero = Hero(hero_name)
         abilities = self.create_ability()
         armors = self.create_armor()
@@ -190,7 +190,7 @@ class Arena:
 
 
     def build_team_one(self):
-        team_1_name = input("Choose a name for Team 1")
+        team_1_name = input("Choose a name for Team 1: ")
         self.first_team = Team(team_1_name)
         team_1_heroes = int(input(f"How many heroes are on {team_1_name}? "))
         for _ in range(0, int(team_1_heroes)):
@@ -199,7 +199,7 @@ class Arena:
 
 
     def build_team_two(self):
-        team_2_name = input("Choose a name for Team 2")
+        team_2_name = input("Choose a name for Team 2: ")
         self.second_team = Team(team_2_name)
         team_2_heroes = int(input(f"How many heroes are on {team_2_name}? "))
         for _ in range(0, int(team_2_heroes)):
@@ -210,7 +210,6 @@ class Arena:
 
     def team_battle(self):
         print("Let the battle begin!")
-        #error
         self.second_team.attack(self.first_team)
 
     def show_stats(self):
