@@ -9,7 +9,7 @@ class Ability:
         self.max_damage = max_damage
 
     def attack(self):
-        attack_strength = random.randint(0, self.max_damage)
+        attack_strength = random.randint(0, int(self.max_damage))
         return attack_strength
 
 
@@ -126,20 +126,22 @@ class Team:
         for hero in self.heroes:
             print(hero.name)
             print(f"Kills: {hero.kills}  Deaths: {hero.deaths}.")
-
+#causing pytest error
     def attack(self, other_team):
         hero_attackers = []
         opponent_attackers = []
 
         for hero in self.heroes:
+            print(f"This the the name of your Hero {hero}")
             if hero.is_alive() == True:
                 hero_attackers.append(hero)
+
 
         for hero in other_team.heroes:
             if hero.is_alive() == True:
                 opponent_attackers.append(hero)
 
-        while len(hero_attackers) > 1 and len(opponent_attackers):
+        while len(hero_attackers) > 0 and len(opponent_attackers) > 0:
             hero_fighter = random.choice(hero_attackers)
             opponent_fighter = random.choice(opponent_attackers)
             hero_fighter.fight(opponent_fighter)
@@ -192,13 +194,14 @@ class Arena:
 
 
     def build_team_one(self):
-        team_1_name = input("Choose a name for Team 1")
+        team_1_name = input("Choose a name for Team 1: ")
         first_team = Team(team_1_name)
         team_1_heroes = int(input(f"How many heroes are on {team_1_name}? "))
         for _ in range(team_1_heroes):
             hero = self.create_hero()
             first_team.add_hero(hero)
         return first_team
+
 
     def build_team_two(self):
         team_2_name = input("Choose a name for Team 2")
@@ -210,9 +213,9 @@ class Arena:
         return second_team
 
 
+
     def team_battle(self):
         print("Let the battle begin!")
-        #error
         self.team_one.attack(self.team_two)
 
     def show_stats(self):
